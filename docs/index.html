@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animaciones Románticas</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap');
+
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f3b038;
+            font-family: 'Nunito', sans-serif;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Estilos de la carta */
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: rgb(226 210 155 / 90%);
+            border-radius: 30px;
+            padding: 30px;
+            box-shadow: 0 0 20px rgb(0 0 0 / 90%);
+            text-align: center;
+            position: absolute;
+            z-index: 10;
+            width: 90%;
+            max-width: 300px;
+            height: auto;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #202103;
+            border: none;
+            color: #fff;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s cubic-bezier(0.25, 0.1, 0.43, 0.27);
+            width: 50%;
+        }
+
+        button:hover {
+            background-color: #eb9a04;
+        }
+
+        /* Ajuste para que todos los mensajes estén centrados */
+        .message-container {
+            display: none; /* Ocultar inicialmente */
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+            font-size: 24px; /* Tamaño de fuente ajustado */
+            color: #020101;
+            text-align: center; /* Alinear el texto al centro */
+            max-width: 80%; /* Limitar el ancho del contenedor para evitar el desbordamiento */
+        }
+
+        .message-container h2 {
+            margin: 10px 0; /* Espacio uniforme entre los mensajes */
+            opacity: 0; /* Ocultar inicialmente los mensajes */
+            transition: opacity 1s; /* Transición para el desvanecimiento */
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-100px) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(calc(100vh + 50px)) rotate(360deg); opacity: 0; }
+        }
+
+        .animated-object {
+            position: absolute;
+            pointer-events: none;
+        }
+
+        .static-image {
+            position: absolute;
+            animation: grow-and-fade 4s ease-in-out forwards; /* Cambié a 'forwards' para mantener el estado final */
+            opacity: 0; /* Inicialmente invisible */
+        }
+
+        .static-image.flower {
+            width: 1cm; /* Tamaño para flores */
+            height: 1cm; /* Tamaño para flores */
+        }
+
+        .static-image.heart {
+            width: 0.5cm; /* Tamaño para corazones */
+            height: 0.5cm; /* Tamaño para corazones */
+        }
+
+        @keyframes grow-and-fade {
+            0% {
+                transform: scale(0); /* Inicia en tamaño 0 */
+                opacity: 0; /* Inicialmente invisible */
+            }
+            50% {
+                transform: scale(1); /* Crece al tamaño normal */
+                opacity: 1; /* Se vuelve visible */
+            }
+            100% {
+                opacity: 0; /* Se desvanece al final */
+            }
+        }
+
+        /* Estilo para el GIF */
+        /* Estilo para el GIF */
+        #gif {
+            position: absolute;
+            top: calc(50% + 5cm); /* 3 cm debajo del tercer texto */
+            left: 50%;
+            transform: translate(-50%, 0); /* Centrado horizontalmente */
+            width: 4cm; /* Ancho del GIF */
+            height: 6cm; /* Alto del GIF */
+            display: none; /* Ocultar inicialmente */
+            opacity: 0; /* Inicialmente invisible */
+            transition: opacity 1s ease; /* Transición para el desvanecimiento */
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="contentContainer">
+        <h1>Para Karina</h1>
+        <button id="openButton">Abrir</button>
+    </div>
+
+    <div class="message-container" id="messageContainer">
+        <h2 id="firstMessage">Perdón por no poder comprarte tus flores amarillas</h2>
+        <h2 id="secondMessage">Pero te las daré a mi manera</h2>
+        <h2 id="finalMessage">Te amo mucho<br> Karina</h2> <!-- Mensaje final en dos líneas -->
+        <img id="gif" src="https://i.ibb.co/8zY9Ss8/Download-unscreen.gif" alt="Gif sorpresa"> <!-- URL del GIF -->
+    </div>
+    <audio id="backgroundMusic" src="musica.mp3" loop autoplay hidden></audio>
+
+    <script>
+        document.getElementById('openButton').addEventListener('click', function() {
+            const contentContainer = document.getElementById('contentContainer');
+            const messageContainer = document.getElementById('messageContainer');
+            const firstMessage = document.getElementById('firstMessage');
+            const secondMessage = document.getElementById('secondMessage');
+            const finalMessage = document.getElementById('finalMessage');
+            const gif = document.getElementById('gif');
+            const backgroundMusic = document.getElementById('backgroundMusic');
+
+
+            // Ocultar el botón y la carta
+            contentContainer.style.display = 'none';
+
+            // Mostrar el contenedor de los mensajes
+            messageContainer.style.display = 'flex'; // Usar flex para mantener la alineación
+
+            // Mostrar el primer mensaje
+            setTimeout(() => {
+                firstMessage.style.opacity = 1; // Mostrar el primer mensaje
+            }, 1000);
+
+            // Aumentar el tiempo que se muestra el primer mensaje
+            setTimeout(() => {
+                firstMessage.style.opacity = 0; // Ocultar el primer mensaje
+                secondMessage.style.opacity = 1; // Mostrar el segundo mensaje
+                backgroundMusic.volume = 0.3; // Establecer el volumen al 50%
+                backgroundMusic.play(); // Iniciar la música aquí
+                
+
+                // Iniciar la caída de flores y corazones
+                setInterval(() => {
+                    for (let i = 0; i < 5; i++) {
+                        createFallingObject('flower');
+                        createFallingObject('heart');
+                    }
+                }, 500); // Cada 500 ms
+
+                // Desvanecer el segundo mensaje después de 3 segundos
+                setTimeout(() => {
+                    secondMessage.style.opacity = 0; // Ocultar el segundo mensaje
+                    finalMessage.style.opacity = 1; // Mostrar el mensaje final
+                    
+                    // Mostrar el GIF un segundo después del mensaje final
+                    gif.style.display = 'block'; // Mostrar el GIF
+                    gif.style.opacity = 1; // Cambiar la opacidad a 1 para desvanecerse
+                }, 4000); // Cambiado a 4000 ms para más tiempo
+            }, 3000); // Cambiado a 3000 ms para más tiempo en el primer mensaje
+
+            // Iniciar la aparición de las imágenes estáticas después de 2 segundos
+            setTimeout(() => {
+                setInterval(() => {
+                    for (let i = 0; i < 20; i++) { // Crear 20 flores y 20 corazones
+                        setTimeout(() => {
+                            createStaticImage('flower'); // Crear una flor
+                        }, i * 100); // Retraso de 100 ms entre cada flor
+                        setTimeout(() => {
+                            createStaticImage('heart'); // Crear un corazón
+                        }, i * 100 + 50); // Retraso de 100 ms más 50 ms para el corazón
+                    }
+                }, 3000); // Aparecerán cada 3 segundos
+            }, 2000); // Espera 2 segundos antes de empezar
+        });
+
+        function createFallingObject(type) {
+            const object = document.createElement('img');
+            object.src = type === 'flower' ? 'https://i.ibb.co/jMv6nQn/pngwing-com-1.png' : 'https://i.ibb.co/7kkpstM/pngwing-com.png';
+            object.style.width = type === 'flower' ? '2cm' : '0.5cm';
+            object.style.position = 'absolute';
+            object.style.left = `${Math.random() * 100}vw`;
+            object.style.top = `-5cm`;
+            object.classList.add('animated-object');
+            document.body.appendChild(object);
+            animateObject(object);
+        }
+
+        function animateObject(object) {
+            const animationDuration = Math.random() * 5 + 5; // Duración aleatoria de 5 a 10 segundos
+            object.style.animation = `fall ${animationDuration}s linear infinite`;
+            setTimeout(() => {
+                object.remove();
+            }, animationDuration * 1000);
+        }
+
+        // Función para crear imágenes que aparezcan y desaparezcan sin caer
+        function createStaticImage(type) {
+            const object = document.createElement('img');
+            object.src = type === 'flower' ? 'https://i.ibb.co/CJRMzBH/b5e262faf51cf8dde776e83ffef8ea12-1-Photoroom.png' : 'https://i.ibb.co/7kkpstM/pngwing-com.png';
+            object.classList.add('static-image', type === 'flower' ? 'flower' : 'heart');
+
+            // Posición aleatoria en la pantalla
+            const randomX = Math.random() * 100; // 0 a 100vw
+            const randomY = Math.random() * 100; // 0 a 100vh
+            object.style.position = 'absolute';
+            object.style.left = `${randomX}vw`;
+            object.style.top = `${randomY}vh`;
+
+            // Calcular la opacidad en función de la posición vertical
+            const opacityValue = Math.max(0.1, 1 - (randomY / 100)); // 1 en la parte superior, 0.1 en la parte inferior
+            object.style.opacity = opacityValue;
+
+            document.body.appendChild(object);
+        }
+
+        // Función para crear múltiples imágenes estáticas
+        function createMultipleStaticImages(type, count) {
+            for (let i = 0; i < count; i++) {
+                createStaticImage(type);
+            }
+        }
+
+    </script>
+</body>
+</html>
