@@ -159,6 +159,8 @@
 
             // Ocultar el botón y la carta
             contentContainer.style.display = 'none';
+            backgroundMusic.play();
+            backgroundMusic.volume = 0.3; // Establecer el volumen al 50%
 
             // Mostrar el contenedor de los mensajes
             messageContainer.style.display = 'flex'; // Usar flex para mantener la alineación
@@ -172,8 +174,6 @@
             setTimeout(() => {
                 firstMessage.style.opacity = 0; // Ocultar el primer mensaje
                 secondMessage.style.opacity = 1; // Mostrar el segundo mensaje
-                backgroundMusic.volume = 0.3; // Establecer el volumen al 50%
-                backgroundMusic.play(); // Iniciar la música aquí
                 
 
                 // Iniciar la caída de flores y corazones
