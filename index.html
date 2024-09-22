@@ -69,10 +69,12 @@
             color: #020101;
             text-align: center; /* Alinear el texto al centro */
             max-width: 80%; /* Limitar el ancho del contenedor para evitar el desbordamiento */
+            opacity: 0; /* Inicialmente invisible */
+            transition: opacity 1s; /* Transición para el desvanecimiento */
         }
 
         .message-container h2 {
-            margin: 10px 0; /* Espacio uniforme entre los mensajes */
+            margin: -0; /* Elimina el margen */
             opacity: 0; /* Ocultar inicialmente los mensajes */
             transition: opacity 1s; /* Transición para el desvanecimiento */
         }
@@ -164,6 +166,7 @@
 
             // Mostrar el contenedor de los mensajes
             messageContainer.style.display = 'flex'; // Usar flex para mantener la alineación
+            messageContainer.style.opacity = 1; // Cambiar la opacidad a 1 para que se vea
 
             // Mostrar el primer mensaje
             setTimeout(() => {
